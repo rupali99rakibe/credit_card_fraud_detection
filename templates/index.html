@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection</title>
+    <!-- Link to the custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Fraud Detection System</h2>
+        <form action="/predict" method="POST">
+            <label for="Time">Time:</label>
+            <input type="number" name="Time" required>
+            
+            <label for="amount">Amount:</label>
+            <input type="number" step="0.01" name="amount" required>
+            
+            <!-- Input fields for v1 to v28 -->
+            {% for i in range(1, 29) %}
+                <label for="v{{ i }}">V{{ i }}:</label>
+                <input type="number" step="0.01" name="v{{ i }}" required>
+            {% endfor %}
+            
+            <button type="submit">Check Transaction</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result">
+                <h3>Prediction Result: {{ prediction }}</h3>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
